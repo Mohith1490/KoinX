@@ -21,7 +21,6 @@ mongoose.connect(process.env.MONGODB_URL).then(() => {
 server.get('/api/transactions/:address', (req, res) => {
     let response = userTransactions(req, res);
     setInterval(getEtheriumPrice, 600000)
-    console.log(response);
 })
 server.get('/api/expenses/:address', async (req, res) => {
     const { address } = req.params
