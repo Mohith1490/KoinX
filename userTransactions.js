@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from 'dotenv'
 import express from 'express'
-import { transactionModel } from "./model/transactions.model.js";
+import { transactionModel,etherPrice } from "./model/transactions.model.js";
 
 dotenv.config();
 
@@ -21,7 +21,7 @@ export async function userTransactions(req, res) {
         });
         const transaction = transition_history.result.map((payment) => ({ ...payment, address, totalexpenses }));
         await transactionModel.insertMany(transaction);
-
+        console.log("success inserted")
     } catch (error) {
         console.error("error occured")
     }
@@ -30,7 +30,9 @@ export async function getEtheriumPrice() {
     try {
         const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=inr');
         const result = await response.json();
-        console.log(result);
+        await etherPrice.create({price: result.ethereum.inr})
+        return result.ethereum.inr
+        
     } catch (error) {
         console.error(error);
     }

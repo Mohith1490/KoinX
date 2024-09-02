@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const transactionSchema = mongoose.Schema({
+    _id: false,
     blockNumber: String,
     blockHash: String,
     timeStamp: String,
@@ -22,7 +23,13 @@ const transactionSchema = mongoose.Schema({
     confirmations: String,
     isError: String,
     address: String,
-    expenses: Number
+    totalexpenses: Number
 })
 
 export const transactionModel = mongoose.model("transactionModel",transactionSchema);
+
+const etherPriceSchema = mongoose.Schema({
+    price: Number
+})
+
+export const etherPrice = mongoose.model("etherPrice",etherPriceSchema);
